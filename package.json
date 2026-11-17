@@ -1,0 +1,92 @@
+{
+  "name": "whycrash",
+  "version": "0.1.0",
+  "description": "Stack traces tell you where. whycrash tells you why. Context-aware diagnoses for Node.js errors, built from your code, files and packages.",
+  "keywords": [
+    "error",
+    "errors",
+    "crash",
+    "debug",
+    "debugging",
+    "diagnose",
+    "diagnostics",
+    "explain",
+    "stack-trace",
+    "developer-experience",
+    "dx",
+    "nodejs",
+    "cli",
+    "esm",
+    "fetch",
+    "econnrefused"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "./dist/register.js",
+    "./dist/register.cjs"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./register": {
+      "import": {
+        "types": "./dist/register.d.ts",
+        "default": "./dist/register.js"
+      },
+      "require": {
+        "types": "./dist/register.d.cts",
+        "default": "./dist/register.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "bin": {
+    "whycrash": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "!dist/cli.cjs",
+    "!dist/**/*.map",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:package": "npm run build && node scripts/smoke-test.mjs",
+    "check:exports": "publint && attw --pack . --profile node16",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm test && npm run test:package && npm run check:exports",
+    "prepublishOnly": "npm run check"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
+    "@eslint/js": "10.0.1",
+    "@types/node": "22.20.5",
+    "eslint": "10.14.0",
+    "prettier": "3.9.10",
+    "publint": "0.3.25",
+    "tsup": "9.0.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1",
+    "vitest": "5.1.0"
+  }
+}
